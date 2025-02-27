@@ -1,5 +1,4 @@
 import { Image, StyleSheet, Platform } from "react-native";
-import { FIREBASE_PROJECT_ID } from "@env";
 
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
@@ -23,7 +22,9 @@ export default function HomeScreen() {
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Environment Variable Test</ThemedText>
-        <ThemedText>Project ID: {FIREBASE_PROJECT_ID}</ThemedText>
+        <ThemedText>
+          Project ID: {process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID}
+        </ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
