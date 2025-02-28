@@ -15,6 +15,7 @@ import { FirebaseError } from "firebase/app";
 import { useState } from "react";
 import { app } from "@/config/firebaseConfig";
 import { router, useRouter } from "expo-router";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 
 interface UserData {
   firstName: string;
@@ -87,88 +88,124 @@ export default function SignupScreen() {
       >
         <View style={styles.contentContainer}>
           <Image
-            source={require("../assets/images/icon.png")}
+            source={require("../assets/images/axed-logo-D0D0D0.png")}
             style={styles.logo}
             resizeMode="contain"
           />
 
           <ThemedText style={styles.title}>Create your account</ThemedText>
 
-          <View style={styles.inputContainer}>
-            <ThemedText style={styles.label}>First Name</ThemedText>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your first name"
-              placeholderTextColor="#666666"
-              value={userData.firstName}
-              onChangeText={(text) =>
-                setUserData({ ...userData, firstName: text })
-              }
-              autoCapitalize="words"
-            />
+          <View style={styles.inputGroup}>
+          <ThemedText style={styles.label}>First Name</ThemedText>
+            <View style={styles.inputContainer}>
+              <IconSymbol
+                style={styles.icons}
+                name="pencil"
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your first name"
+                placeholderTextColor="#666666"
+                value={userData.firstName}
+                onChangeText={(text) =>
+                  setUserData({ ...userData, firstName: text })
+                }
+                autoCapitalize="words"
+              />
+            </View>
           </View>
 
-          <View style={styles.inputContainer}>
-            <ThemedText style={styles.label}>Last Name</ThemedText>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your last name"
-              placeholderTextColor="#666666"
-              value={userData.lastName}
-              onChangeText={(text) =>
-                setUserData({ ...userData, lastName: text })
-              }
-              autoCapitalize="words"
-            />
+          <View style={styles.inputGroup}>
+          <ThemedText style={styles.label}>Last Name</ThemedText>
+            <View style={styles.inputContainer}>
+              <IconSymbol
+                style={styles.icons}
+                name="pencil"
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your last name"
+                placeholderTextColor="#666666"
+                value={userData.lastName}
+                onChangeText={(text) =>
+                  setUserData({ ...userData, lastName: text })
+                }
+                autoCapitalize="words"
+              />
+            </View>
           </View>
 
-          <View style={styles.inputContainer}>
+          <View style={styles.inputGroup}>
             <ThemedText style={styles.label}>Age</ThemedText>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your age"
-              placeholderTextColor="#666666"
-              value={userData.age}
-              onChangeText={(text) => setUserData({ ...userData, age: text })}
-              keyboardType="number-pad"
-            />
+            <View style={styles.inputContainer}>
+              <IconSymbol
+                style={styles.icons}
+                name="person.fill"
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your age"
+                placeholderTextColor="#666666"
+                value={userData.age}
+                onChangeText={(text) => setUserData({ ...userData, age: text })}
+                keyboardType="number-pad"
+              />
+            </View>
           </View>
 
-          <View style={styles.inputContainer}>
-            <ThemedText style={styles.label}>Email</ThemedText>
-            <TextInput
-              style={styles.input}
-              placeholder="Enter your email"
-              placeholderTextColor="#666666"
-              value={userData.email}
-              onChangeText={(text) => setUserData({ ...userData, email: text })}
-              autoCapitalize="none"
-              keyboardType="email-address"
-            />
+          <View style={styles.inputGroup}>
+          <ThemedText style={styles.label}>Email</ThemedText>
+            <View style={styles.inputContainer}>
+              <IconSymbol
+                style={styles.icons}
+                name="envelope.fill"
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Enter your email"
+                placeholderTextColor="#666666"
+                value={userData.email}
+                onChangeText={(text) => setUserData({ ...userData, email: text })}
+                autoCapitalize="none"
+                keyboardType="email-address"
+              />
+            </View>
           </View>
 
-          <View style={styles.inputContainer}>
+          <View style={styles.inputGroup}>
             <ThemedText style={styles.label}>Password</ThemedText>
-            <TextInput
-              style={styles.input}
-              placeholder="Create a password"
-              placeholderTextColor="#666666"
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-            />
+            <View style={styles.inputContainer}>
+              <IconSymbol
+                style={styles.icons}
+                name="lock.fill"
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Create a password"
+                placeholderTextColor="#666666"
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+              />
+            </View>
           </View>
 
-          <View style={styles.inputContainer}>
+          <View style={styles.inputGroup}>
             <ThemedText style={styles.label}>Confirm Password</ThemedText>
-            <TextInput
-              style={styles.input}
-              placeholder="Confirm your password"
-              placeholderTextColor="#666666"
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-              secureTextEntry
-            />
+            <View style={styles.inputContainer}>
+              <IconSymbol
+                style={styles.icons}
+                name="lock.rotation"
+              />
+              <TextInput
+                style={styles.input}
+                placeholder="Confirm your password"
+                placeholderTextColor="#666666"
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry
+              />
+            </View>
           </View>
 
           {error ? <ThemedText style={styles.error}>{error}</ThemedText> : null}
@@ -227,8 +264,19 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   inputContainer: {
-    width: "100%",
+    flexDirection: "row",
     marginBottom: 20,
+    width: "100%",
+    height: 50,
+    backgroundColor: "rgba(51, 102, 153, 0.5)",
+    borderRadius: 16,
+    paddingHorizontal: 16,
+    alignItems: "center",
+  },
+  inputGroup: {
+    width: "100%",
+    maxWidth: 400,
+    flexDirection: "column"
   },
   label: {
     fontSize: 16,
@@ -237,14 +285,13 @@ const styles = StyleSheet.create({
     fontFamily: "SpaceMono",
   },
   input: {
-    width: "100%",
-    height: 50,
-    backgroundColor: "rgba(51, 102, 153, 0.5)",
-    borderRadius: 16,
-    paddingHorizontal: 16,
     color: "#D0D0D0",
     fontSize: 16,
     fontFamily: "SpaceMono",
+    flex: 1,
+    height: "100%",
+    paddingVertical: 10,
+    outlineWidth: 0,
   },
   button: {
     backgroundColor: "#336699",
@@ -280,4 +327,10 @@ const styles = StyleSheet.create({
     fontFamily: "SpaceMono",
     textAlign: "center",
   },
+  icons: {
+    color: "#111111",
+    fontSize: 30,
+    marginLeft: -8,
+    marginRight: 8,
+  }
 });

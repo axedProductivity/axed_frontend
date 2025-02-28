@@ -6,6 +6,7 @@ import { FirebaseError } from "firebase/app";
 import { useState } from "react";
 import { app } from "@/config/firebaseConfig";
 import { router, useRouter } from "expo-router";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -37,36 +38,48 @@ export default function LoginScreen() {
     <View style={styles.container}>
       <View style={styles.contentContainer}>
         <Image
-          source={require("../assets/images/icon.png")}
+          source={require("../assets/images/axed-logo-D0D0D0.png")}
           style={styles.logo}
           resizeMode="contain"
         />
 
         <ThemedText style={styles.title}>Log in to your account</ThemedText>
 
-        <View style={styles.inputContainer}>
+        <View style={styles.inputGroup}>
           <ThemedText style={styles.label}>Email</ThemedText>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your email"
-            placeholderTextColor="#666666"
-            value={email}
-            onChangeText={setEmail}
-            autoCapitalize="none"
-            keyboardType="email-address"
-          />
+          <View style={styles.inputContainer}>
+            <IconSymbol
+              style={styles.icons}
+              name="person.fill"
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your email"
+              placeholderTextColor="#666666"
+              value={email}
+              onChangeText={setEmail}
+              autoCapitalize="none"
+              keyboardType="email-address"
+            />
+          </View>
         </View>
 
-        <View style={styles.inputContainer}>
+        <View style={styles.inputGroup}>
           <ThemedText style={styles.label}>Password</ThemedText>
-          <TextInput
-            style={styles.input}
-            placeholder="Enter your password"
-            placeholderTextColor="#666666"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
-          />
+          <View style={styles.inputContainer}>
+          <IconSymbol
+              style={styles.icons}
+              name="lock.fill"
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Enter your password"
+              placeholderTextColor="#666666"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
+          </View>
         </View>
 
         {error ? <ThemedText style={styles.error}>{error}</ThemedText> : null}
@@ -117,8 +130,19 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   inputContainer: {
-    width: "100%",
+    flexDirection: "row",
     marginBottom: 20,
+    width: "100%",
+    height: 50,
+    backgroundColor: "rgba(51, 102, 153, 0.5)",
+    borderRadius: 16,
+    paddingHorizontal: 16,
+    alignItems: "center",
+  },
+  inputGroup: {
+    width: "100%",
+    maxWidth: 400,
+    flexDirection: "column"
   },
   label: {
     fontSize: 16,
@@ -127,14 +151,13 @@ const styles = StyleSheet.create({
     fontFamily: "SpaceMono",
   },
   input: {
-    width: "100%",
-    height: 50,
-    backgroundColor: "rgba(51, 102, 153, 0.5)",
-    borderRadius: 16,
-    paddingHorizontal: 16,
     color: "#D0D0D0",
     fontSize: 16,
     fontFamily: "SpaceMono",
+    flex: 1,
+    height: "100%",
+    paddingVertical: 10,
+    outlineWidth: 0,
   },
   button: {
     backgroundColor: "#336699",
@@ -167,4 +190,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginTop: 20,
   },
+  icons: {
+    color: "#111111",
+    fontSize: 30,
+    marginLeft: -8,
+    marginRight: 8,
+  }
 });
