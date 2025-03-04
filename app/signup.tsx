@@ -62,11 +62,35 @@ export default function SignupScreen() {
 
       // Create user account
       const auth = getAuth(app);
+      console.log(process.env.EXPO_PUBLIC_API_URL);
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_API_URL}/api/v1/users`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // Authorization: `Bearer ${idToken}`, // Include token
+          },
+          body: JSON.stringify({
+            email: userData.email,
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            age: userData.age,
+          }),
+        }
+      );
+      if (!response.ok) {
+        setError("Failed to create user");
+        console.log(await response.json());
+        throw new Error("Failed to create user");
+      }
       const { user } = await createUserWithEmailAndPassword(
         auth,
         userData.email,
         password
       );
+      const idToken = await user.getIdToken();
+
       router.replace("/(tabs)");
     } catch (err) {
       const firebaseError = err as FirebaseError;
@@ -96,12 +120,9 @@ export default function SignupScreen() {
           <ThemedText style={styles.title}>Create your account</ThemedText>
 
           <View style={styles.inputGroup}>
-          <ThemedText style={styles.label}>First Name</ThemedText>
+            <ThemedText style={styles.label}>First Name</ThemedText>
             <View style={styles.inputContainer}>
-              <IconSymbol
-                style={styles.icons}
-                name="pencil"
-              />
+              <IconSymbol style={styles.icons} name="pencil" color="#111111" />
               <TextInput
                 style={styles.input}
                 placeholder="Enter your first name"
@@ -116,12 +137,9 @@ export default function SignupScreen() {
           </View>
 
           <View style={styles.inputGroup}>
-          <ThemedText style={styles.label}>Last Name</ThemedText>
+            <ThemedText style={styles.label}>Last Name</ThemedText>
             <View style={styles.inputContainer}>
-              <IconSymbol
-                style={styles.icons}
-                name="pencil"
-              />
+              <IconSymbol style={styles.icons} name="pencil" color="#111111" />
               <TextInput
                 style={styles.input}
                 placeholder="Enter your last name"
@@ -141,6 +159,7 @@ export default function SignupScreen() {
               <IconSymbol
                 style={styles.icons}
                 name="person.fill"
+                color="#111111"
               />
               <TextInput
                 style={styles.input}
@@ -154,18 +173,21 @@ export default function SignupScreen() {
           </View>
 
           <View style={styles.inputGroup}>
-          <ThemedText style={styles.label}>Email</ThemedText>
+            <ThemedText style={styles.label}>Email</ThemedText>
             <View style={styles.inputContainer}>
               <IconSymbol
                 style={styles.icons}
                 name="envelope.fill"
+                color="#111111"
               />
               <TextInput
                 style={styles.input}
                 placeholder="Enter your email"
                 placeholderTextColor="#666666"
                 value={userData.email}
-                onChangeText={(text) => setUserData({ ...userData, email: text })}
+                onChangeText={(text) =>
+                  setUserData({ ...userData, email: text })
+                }
                 autoCapitalize="none"
                 keyboardType="email-address"
               />
@@ -178,6 +200,7 @@ export default function SignupScreen() {
               <IconSymbol
                 style={styles.icons}
                 name="lock.fill"
+                color="#111111"
               />
               <TextInput
                 style={styles.input}
@@ -196,6 +219,7 @@ export default function SignupScreen() {
               <IconSymbol
                 style={styles.icons}
                 name="lock.rotation"
+                color="#111111"
               />
               <TextInput
                 style={styles.input}
@@ -276,7 +300,7 @@ const styles = StyleSheet.create({
   inputGroup: {
     width: "100%",
     maxWidth: 400,
-    flexDirection: "column"
+    flexDirection: "column",
   },
   label: {
     fontSize: 16,
@@ -291,7 +315,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: "100%",
     paddingVertical: 10,
-    outlineWidth: 0,
   },
   button: {
     backgroundColor: "#336699",
@@ -332,5 +355,5 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginLeft: -8,
     marginRight: 8,
-  }
+  },
 });

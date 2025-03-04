@@ -25,10 +25,15 @@ export default function LoginScreen() {
       setIsLoading(true);
       setError("");
       const auth = getAuth(app);
-      await signInWithEmailAndPassword(auth, email, password);
+      const { user } = await signInWithEmailAndPassword(auth, email, password);
+
+      const idToken = await user.getIdToken();
+      console.log("ID Token:", idToken); // For debugging
+
+      router.replace("/(tabs)");
     } catch (err) {
       const firebaseError = err as FirebaseError;
-      setError(firebaseError.message);
+      setError("Invalid email or password");
     } finally {
       setIsLoading(false);
     }
@@ -48,10 +53,7 @@ export default function LoginScreen() {
         <View style={styles.inputGroup}>
           <ThemedText style={styles.label}>Email</ThemedText>
           <View style={styles.inputContainer}>
-            <IconSymbol
-              style={styles.icons}
-              name="person.fill"
-            />
+            <IconSymbol style={styles.icons} name="person.fill" />
             <TextInput
               style={styles.input}
               placeholder="Enter your email"
@@ -67,10 +69,7 @@ export default function LoginScreen() {
         <View style={styles.inputGroup}>
           <ThemedText style={styles.label}>Password</ThemedText>
           <View style={styles.inputContainer}>
-          <IconSymbol
-              style={styles.icons}
-              name="lock.fill"
-            />
+            <IconSymbol style={styles.icons} name="lock.fill" color="#111111" />
             <TextInput
               style={styles.input}
               placeholder="Enter your password"
@@ -142,7 +141,7 @@ const styles = StyleSheet.create({
   inputGroup: {
     width: "100%",
     maxWidth: 400,
-    flexDirection: "column"
+    flexDirection: "column",
   },
   label: {
     fontSize: 16,
@@ -157,7 +156,6 @@ const styles = StyleSheet.create({
     flex: 1,
     height: "100%",
     paddingVertical: 10,
-    outlineWidth: 0,
   },
   button: {
     backgroundColor: "#336699",
@@ -195,5 +193,5 @@ const styles = StyleSheet.create({
     fontSize: 30,
     marginLeft: -8,
     marginRight: 8,
-  }
+  },
 });
