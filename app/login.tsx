@@ -53,7 +53,11 @@ export default function LoginScreen() {
         <View style={styles.inputGroup}>
           <ThemedText style={styles.label}>Email</ThemedText>
           <View style={styles.inputContainer}>
-            <IconSymbol style={styles.icons} name="person.fill" />
+            <IconSymbol
+              style={styles.icons}
+              name="person.fill"
+              color="#111111"
+            />
             <TextInput
               style={styles.input}
               placeholder="Enter your email"
