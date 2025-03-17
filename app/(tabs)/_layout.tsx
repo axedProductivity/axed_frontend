@@ -4,27 +4,25 @@ import { Platform } from "react-native";
 
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
-import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
-
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor: "#FFFFFF",
+        tabBarInactiveTintColor: "#444444",
         headerShown: false,
         tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: "absolute",
-          },
-          default: {},
-        }),
+        tabBarStyle: {
+          backgroundColor: "0B0E1E",
+          position: "absolute",
+        },
       }}
     >
       <Tabs.Screen
@@ -42,6 +40,24 @@ export default function TabLayout() {
           title: "Explore",
           tabBarIcon: ({ color }) => (
             <IconSymbol size={28} name="paperplane.fill" color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="notes"
+        options={{
+          title: "Journal",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="journal-whills" size={24} color={color} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="meditation"
+        options={{
+          title: "Meditation",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="meditation" size={24} color={color} />
           ),
         }}
       />
