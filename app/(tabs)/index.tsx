@@ -1,5 +1,4 @@
 import { Image, StyleSheet, Platform } from "react-native";
-import * as Location from "expo-location";
 import { HelloWave } from "@/components/HelloWave";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
@@ -8,9 +7,6 @@ import { getAuth } from "firebase/auth";
 import { useState, useEffect } from "react";
 
 export default function HomeScreen() {
-  const [location, setLocation] = useState<Location.LocationObject | null>(
-    null
-  );
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [idToken, setIdToken] = useState<string | null>(null);
 
@@ -24,27 +20,6 @@ export default function HomeScreen() {
     };
     getIdToken();
   }, []);
-
-  useEffect(() => {
-    async function getCurrentLocation() {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    }
-
-    getCurrentLocation();
-  }, []);
-
-  useEffect(() => {
-    if (location) {
-      console.log("Location:", location);
-    }
-  }, [location]);
 
   return (
     <ParallaxScrollView
@@ -66,7 +41,6 @@ export default function HomeScreen() {
           Project ID: {process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID}
         </ThemedText>
         <ThemedText>ID Token: {idToken}</ThemedText>
-        <ThemedText>Location: {JSON.stringify(location)}</ThemedText>
       </ThemedView>
       <ThemedView style={styles.stepContainer}>
         <ThemedText type="subtitle">Step 1: Try it</ThemedText>
