@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
 import { useUserData } from "@/hooks/getUserData";
@@ -7,10 +14,11 @@ import SkeletonLoading from "@/components/loading";
 import { useAuth } from "@/hooks/useAuth";
 import useLocation from "@/hooks/useLocation";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-
 import DateCarousel from "@/components/notes/dateCarousel";
+import { useNavigation } from "@react-navigation/native";
 
 export default function NotesScreen() {
+  const navigation = useNavigation();
   const { user, loading: authLoading } = useAuth();
   const { userData, loading: userDataLoading } = useUserData(user);
   const insets = useSafeAreaInsets();
@@ -26,13 +34,13 @@ export default function NotesScreen() {
       const currentHour = new Date().getHours();
 
       if (currentHour >= 5 && currentHour < 12) {
-        setGreeting("Good morning");
+        setGreeting("Rise and shine ☀️");
       } else if (currentHour >= 12 && currentHour < 17) {
-        setGreeting("Good afternoon");
+        setGreeting("Having a great day 🌤️");
       } else if (currentHour >= 17 && currentHour < 22) {
-        setGreeting("Good evening");
+        setGreeting("Winding down, ✨");
       } else {
-        setGreeting("Still up late");
+        setGreeting("Night owl mode 🌙");
       }
     };
 
@@ -134,6 +142,12 @@ export default function NotesScreen() {
               initialDate={selectedDate}
               onDateChange={onDateChange}
             />
+            <TouchableOpacity
+              style={styles.createNoteButton}
+              onPress={() => navigation.navigate({ name: "createNote" })}
+            >
+              <Text style={styles.createNoteButtonText}>Create Note</Text>
+            </TouchableOpacity>
           </View>
         </ScrollView>
       </LinearGradient>
@@ -161,7 +175,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 32,
     marginBottom: 24,
-    fontFamily: "PlayfairDisplay_600SemiBold",
+    fontFamily: "PlayfairDisplay_500Medium",
   },
   headerContainer: {
     flexDirection: "row",
@@ -175,9 +189,9 @@ const styles = StyleSheet.create({
   },
   question: {
     color: "#CCCCCC",
-    fontSize: 20,
+    fontSize: 16,
     marginBottom: 8,
-    fontFamily: "PlayfairDisplay_400Regular",
+    fontFamily: "Montserrat_400Regular",
   },
   locationContainer: {
     marginTop: 4,
@@ -192,7 +206,7 @@ const styles = StyleSheet.create({
   temperature: {
     color: "#FFFFFF",
     fontSize: 18,
-    fontFamily: "PlayfairDisplay_600SemiBold",
+    fontFamily: "Montserrat_400Regular",
     marginBottom: 4,
   },
   conditionContainer: {
@@ -207,5 +221,18 @@ const styles = StyleSheet.create({
   conditionText: {
     color: "#CCCCCC",
     fontSize: 14,
+  },
+  createNoteButton: {
+    backgroundColor: "#4866fe",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 5,
+    marginTop: 20,
+  },
+  createNoteButtonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontFamily: "Montserrat_700Bold",
+    textAlign: "center",
   },
 });
