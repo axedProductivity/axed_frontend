@@ -60,6 +60,15 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="createNote"
+        options={{
+          title: "Create Note",
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons name="plus" size={24} color={color} />
+          ),
+        }}
+      />
     </Tabs>
   );
 }
