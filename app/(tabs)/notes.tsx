@@ -16,7 +16,7 @@ import useLocation from "@/hooks/useLocation";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import DateCarousel from "@/components/notes/dateCarousel";
 import { useNavigation } from "@react-navigation/native";
-
+import { Ionicons } from "@expo/vector-icons";
 export default function NotesScreen() {
   const navigation = useNavigation();
   const { user, loading: authLoading } = useAuth();
@@ -146,6 +146,14 @@ export default function NotesScreen() {
               style={styles.createNoteButton}
               onPress={() => navigation.navigate({ name: "createNote" })}
             >
+              <View style={styles.createNotePlus}>
+                <Ionicons
+                  name="add"
+                  size={28}
+                  color="white"
+                  style={{ fontWeight: "bold" }}
+                />
+              </View>
               <Text style={styles.createNoteButtonText}>Create Note</Text>
             </TouchableOpacity>
           </View>
@@ -228,11 +236,21 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     borderRadius: 5,
     marginTop: 20,
+    alignItems: "center",
+    justifyContent: "center",
   },
   createNoteButtonText: {
     color: "#FFFFFF",
     fontSize: 16,
     fontFamily: "Montserrat_700Bold",
     textAlign: "center",
+  },
+  createNotePlus: {
+    width: 32,
+    height: 32,
+    backgroundColor: "#0B0E1E",
+    borderRadius: 8,
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
